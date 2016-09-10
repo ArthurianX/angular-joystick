@@ -1,0 +1,46 @@
+{
+  "name": "angular-joystick",
+  "version": "0.0.1",
+  "main": [
+    "dist/angular-joystick.js",
+    "dist/angular-joystick.css"
+  ],
+  "dependencies": {
+    "angular": "~1.4.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "temp",
+    "images",
+    "demo",
+    "lib",
+    "./angular-joystick.js",
+    "Gruntfile.js",
+    "package.json",
+    "README.md",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular-mocks": "~1.4.12",
+    "angular-animate": "~1.4.12"
+  },
+  "resolutions": {
+    "angular": "~1.4.12"
+  },
+  "homepage": "https://github.com/ArthurianX/angular-joystick",
+  "authors": [
+    "Kovacs Arthur <kovacs.arthur.kraid@gmail.com>"
+  ],
+  "description": "Angular Joystick component for hybrid games",
+  "keywords": [
+    "typeahead",
+    "breadcrumb",
+    "selection",
+    "resize"
+  ],
+  "license": "MIT"
+}
