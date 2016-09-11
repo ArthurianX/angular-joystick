@@ -1,10 +1,11 @@
 
-
+$button-size: 50px;
 .art-joystick-container {
-
     position: relative;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    width: 150px;
+    height: 150px;
     &:before {
         content: ' ';
         display: table
@@ -13,5 +14,31 @@
         clear: both
     }
     @import "processed-images.scss";
+
+    .art-pad {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        position: relative;
+    }
+
+    .art-joystick {
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        &.returning {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .art-button {
+            width: $button-size;
+            height: $button-size;
+            margin-top: -($button-size / 2);
+            margin-left: -($button-size / 2);
+            cursor: pointer;
+        }
+    }
 
 }

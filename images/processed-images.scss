@@ -1,11 +1,11 @@
-.art-canvas {
+.art-pad {
   background-image: url("canvas.png");
-  background-size: 150px 150px;
+  background-size: 100% 100%;
 }
 
 .art-button {
   background-image: url("button.png");
-  background-size: 150px 150px;
+  background-size: 100% 100%;
 }
 
 /* Media Queries which target HiDPI Screens, just in case ... */
