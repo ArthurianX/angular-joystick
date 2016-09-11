@@ -74,6 +74,52 @@
                             <td>Object</td>
                             <td>The main directive declaration.</td>
                         </tr>
+                        <tr>
+                            <td>send-movement</td>
+                            <td>Callback</td>
+                            <td>will callback one of: {response: {left: speed, right: speed}}, {response: {angle: 27, speed: speed}}. {response: {direction: 'up-left', speed: speed}}</td>
+                        </tr>
+                        <tr>
+                            <td>cordova-enabled</td>
+                            <td>Boolean</td>
+                            <td>If enabled, find the cordova extension and run the events through that</td>
+                        </tr>
+
+                        <tr>
+                            <td>vibration-enabled</td>
+                            <td>Boolean</td>
+                            <td>If enabled, try to find some vibration controls and run then</td>
+                        </tr>
+
+                        <tr>
+                            <td>speed-increase</td>
+                            <td>String</td>
+                            <td>'linear', 'exponential'</td>
+                        </tr>
+
+                        <tr>
+                            <td>max-positive-speed</td>
+                            <td>Integer</td>
+                            <td>Maximum positive (forward) speed</td>
+                        </tr>
+
+                        <tr>
+                            <td>min-positive-speed</td>
+                            <td>Integer</td>
+                            <td>Maximum negative (backward) speed</td>
+                        </tr>
+
+                        <tr>
+                            <td>direction-management</td>
+                            <td>String</td>
+                            <td>'direct' - means we send acceleration for each wheel through the callback (real devices); 'angle' - we send the angle of movement and acceleration through the callback (real / on-screen interactive element); 'directions': - we send 'up', 'up-left', 'up-right', 'left', 'right', 'down-left', (on-screen interactive element); 'down-right' and acceleration through the callback</td>
+                        </tr>
+
+                        <tr>
+                            <td>control-size</td>
+                            <td>Integer</td>
+                            <td>The size in pixels of the control on page, max 300</td>
+                        </tr>
 
                         </tbody>
                     </table>
