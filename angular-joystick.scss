@@ -1,5 +1,7 @@
 
-$button-size: 50px;
+$button-size: 60px;
+$control-size: 20px;
+$control-distance: 5px;
 .art-joystick-container {
     position: relative;
     -webkit-box-sizing: border-box;
@@ -30,15 +32,69 @@ $button-size: 50px;
         left: 50%;
         z-index: 2;
         &.returning {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.46, 0.13, 0.27, 1.44);
         }
         .art-button {
+            -moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
+            -webkit-user-select: none;
+            -ms-user-select: none; /* From IE10 only */
+            user-select: none; /* Not valid CSS yet, as of July 2012 */
+            -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
+            user-drag: none;
             width: $button-size;
             height: $button-size;
             margin-top: -($button-size / 2);
             margin-left: -($button-size / 2);
             cursor: pointer;
+            border-radius: $button-size;
+            box-shadow: 1px 3px 7px 3px rgba(0, 0, 0, 0.7);
+            &.shadow-top {
+                box-shadow: 1px 3px 7px 3px rgba(0, 0, 0, 0.7);
+            }
+            &.shadow-bottom {
+                box-shadow: 1px 3px 7px 3px rgba(0, 0, 0, 0.7);
+            }
+            &.shadow-left {
+                box-shadow: 1px 3px 7px 3px rgba(0, 0, 0, 0.7);
+            }
+            &.shadow-right {
+                box-shadow: 1px 3px 7px 3px rgba(0, 0, 0, 0.7);
+            }
         }
+    }
+
+    .art-arrow, .art-arrow-active {
+        width: $control-size;
+        height: $control-size;
+        position: absolute;
+        cursor: pointer;
+    }
+    .art-arrow-up {
+        //transform: rotate(180deg);
+        top: -($control-size + $control-distance);
+        left: 50%;
+        margin-left: -($control-size / 2);
+    }
+
+    .art-arrow-down {
+        transform: rotate(180deg);
+        bottom: -($control-size + $control-distance);
+        left: 50%;
+        margin-left: -($control-size / 2);
+    }
+
+    .art-arrow-right {
+        transform: rotate(90deg);
+        top: 50%;
+        right: -($control-size + $control-distance);
+        margin-top: -($control-size / 2);
+    }
+
+    .art-arrow-left {
+        transform: rotate(-90deg);
+        top: 50%;
+        left: -($control-size + $control-distance);
+        margin-top: -($control-size / 2);
     }
 
 }

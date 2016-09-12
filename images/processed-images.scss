@@ -1,10 +1,20 @@
 .art-pad {
-  background-image: url("canvas.png");
+  background-image: url("pad.png");
   background-size: 100% 100%;
 }
 
 .art-button {
   background-image: url("button.png");
+  background-size: 100% 100%;
+}
+
+.art-arrow {
+  background-image: url("arrow.png");
+  background-size: 100% 100%;
+}
+
+.art-arrow-active {
+  background-image: url("arrow-active.png");
   background-size: 100% 100%;
 }
 
