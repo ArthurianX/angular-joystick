@@ -6,7 +6,8 @@
     "dist/angular-joystick.css"
   ],
   "dependencies": {
-    "angular": "~1.4.0"
+    "angular": "~1.4.0",
+    "lodash": "^4.15.0"
   },
   "ignore": [
     "**/.*",
