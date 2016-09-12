@@ -1,5 +1,5 @@
 {
-  "name": "angular-joystick",
+  "name": "angular-joystick-advanced",
   "version": "0.0.1",
   "main": [
     "dist/angular-joystick.js",
@@ -36,12 +36,13 @@
   "authors": [
     "Kovacs Arthur <kovacs.arthur.kraid@gmail.com>"
   ],
-  "description": "Angular Joystick component for hybrid games",
+  "description": "Angular Joystick component for hybrid games and robotics projects",
   "keywords": [
-    "typeahead",
-    "breadcrumb",
-    "selection",
-    "resize"
+    "joystick",
+    "angular",
+    "games",
+    "hybrid",
+    "robotics"
   ],
   "license": "MIT"
 }
