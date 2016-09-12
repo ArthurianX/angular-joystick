@@ -1,6 +1,6 @@
 {
   "name": "angular-joystick-advanced",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "main": [
     "dist/angular-joystick.js",
     "dist/angular-joystick.css"
