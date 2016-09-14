@@ -35,7 +35,7 @@
     left: 50%;
     z-index: 2; }
     .art-joystick-container .art-joystick.returning {
-      transition: all 0.5s cubic-bezier(0.46, 0.13, 0.27, 1.44); }
+      transition: all 0.2s cubic-bezier(0.51, -0.33, 0.51, 1.16); }
     .art-joystick-container .art-joystick .art-button {
       -moz-user-select: none;
       /* These user-select properties are inheritable, used to prevent text selection */
@@ -86,5 +86,18 @@
     top: 50%;
     left: -25px;
     margin-top: -10px; }
+  .art-joystick-container .art-debug {
+    position: absolute;
+    background-color: #222;
+    opacity: 0.8;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    color: #fff;
+    padding: 7px 15px 1px 15px;
+    z-index: 1;
+    border-radius: 5px;
+    bottom: -120px;
+    letter-spacing: 2px; }
 
 /*# sourceMappingURL=angular-joystick.css.map */

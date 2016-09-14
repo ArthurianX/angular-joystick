@@ -131,7 +131,8 @@ angular.module('artJoystick')
                                                 // 'angle' - we send the angle of movement and acceleration through the callback (real / on-screen interactive element)
                                                 // 'directions': - we send 'up', 'up-left', 'up-right', 'left', 'right', 'down-left', (on-screen interactive element)
                                                 //                  'down-right' and acceleration through the callback **/
-                    controlSize: "=" // The size in pixels of the control on page, max 300.
+                    controlSize: "=", // The size in pixels of the control on page, max 300.
+                    speedDebug: "=" // The size in pixels of the control on page, max 300.
                 },
                 transclude: false,
                 templateUrl: 'angular-joystick.html',
@@ -176,6 +177,7 @@ angular.module('artJoystick')
                         touchedCenter: [],
                         elementPosition: element[0].getBoundingClientRect(),
                         cordova: function(){if (scope.cordovaEnabled) {return true;} else {return false;}},
+                        debug: function(){if (scope.speedDebug) {return true;} else {return false;}},
                         vibrationEnabled: function(){if (scope.vibrationEnabled) {return true;} else {return false;}},
                         speedIncrease: function(){if (scope.speedIncrease === 'exponential') {return 'exponential';} else {return 'linear';}}, //Linear by default
                         maxPositiveSpeed: scope.maxPositiveSpeed || 255, // Shouldn't be undefined, but still ...
@@ -192,9 +194,11 @@ angular.module('artJoystick')
                         controlSize: function(){if (scope.controlSize && parseInt(scope.controlSize)) {return parseInt(scope.controlSize);} else {return false;}},
                         pixelToSpeedRatio: 0,
                         radius: 0,
-                        timeoutToStop: 1000,
+                        timeoutToStop: 700,
                         singleButton: false
                     };
+                    
+                    scope.debug = settings.debug();
 
                     scope.actual = {
                         x: 0,
@@ -205,14 +209,27 @@ angular.module('artJoystick')
                             down: 0,
                             left: 0,
                             right: 0
-                        }
+                        },
+                        finalWheelSpeedLeft: 0,
+                        finalWheelSpeedRight: 0
                     };
 
-                    button.css({'left': settings.center[0] + 'px'});
-                    button.css({'top': settings.center[1] + 'px'});
-
-
                     /** Movement / UI / Positioning **/
+                    
+                    //// Control Size
+
+                        if (settings.controlSize()) {
+                            angular.element(element.children()).css({width: settings.controlSize() + 'px', height: settings.controlSize() + 'px'});
+                        }
+
+
+                    $timeout(function(){
+                        settings.center = [button[0].offsetLeft, button[0].offsetTop];
+                        button.css({'left': settings.center[0] + 'px'});
+                        button.css({'top': settings.center[1] + 'px'});
+                    }, 500);
+
+
 
                     //// Hooking Up Events
 
@@ -360,22 +377,14 @@ angular.module('artJoystick')
                         // If no other action has been taken, return the joystick to its initial position
                         button.addClass('returning');
 
-                        //TODO: Question the logic here ... is it ok ?
                         $timeout(function(){
                             button.css({'left': settings.center[0] + 'px', 'top': settings.center[1] + 'px'});
-                        }, 500);
+                        }, settings.timeoutToStop - 500);
 
                         $timeout(function(){
                             button.removeClass('returning');
                         }, settings.timeoutToStop);
                     };
-
-                    /*stopMovement = $timeout(function(){
-                        console.log('movement stopped');
-                        settings.moving = 0;
-                    }, settings.timeoutToStop);
-                    $timeout.cancel(stopMovement);*/
-
 
                     /** Math for speed / direction **/
 
@@ -393,7 +402,7 @@ angular.module('artJoystick')
 
 
                         // This is not carthesian, at all ... f**k it.
-                        //Make all the number in the range of 1 <> -1
+                        //Make all the number in the range of 1 <> -1, otherwise the algorithm returns gibberish ... //TODO: <<<<
                         return [-(x - centerX)/divider, -(y - centerY)/divider];
 
                     };
@@ -457,8 +466,44 @@ angular.module('artJoystick')
 
                     var differentialControl = function(pos,ratio) {
 
+                        /** Adjustments by adaptorel
+                         *
+                         *  I won't dwell much on this at the moment, I'll need to refine/test the differential calculation algorithm.
+                         * */
+
                         var wheels = artDifferentialControl.calculate(pos[0], pos[1], undefined, undefined, settings.maxPositiveSpeed);
-                        scope.sendMovement({response: {left: wheels[0], right: wheels[1]}});
+
+                        var l = wheels[0];
+                        if (l > 50) {
+                            l = 50 + l;
+                        } else if (l < -50) {
+                            l = l - 50;
+                        } else {
+                            l = 0;
+                        }
+
+                        var r = wheels[1];
+                        if (r > 50) {
+                            r = 50 + r;
+                        } else if (r < -50) {
+                            r = r - 50;
+                        } else {
+                            r = 0;
+                        }
+
+                        // Curve / Corner Case
+
+                        // Smoother curves
+                        /*if (l - r > 200) {
+                            r += 70
+                        } else if (l - r < -200) {
+                            l += 70
+                        }*/
+
+                        scope.actual.finalWheelSpeedLeft = parseInt(0 - l);
+                        scope.actual.finalWheelSpeedRight = parseInt(0 - r);
+
+                        scope.sendMovement({response: {left: 0 - l, right: 0 - r}});
                         /*console.log('Sent Params', 'x', pos[0], 'y', pos[1], 'maxAxis', settings.radius || (settings.center[0] - 20), 'minAxis', - (settings.radius || (settings.center[0] -20)), 'maxSpeed', settings.maxPositiveSpeed, 1);
                         console.info('artDifferentialControl', artDifferentialControl.calculate(pos[0], pos[1], settings.radius || (settings.center[0] -20), - (settings.radius || (settings.center[0] - 20)), settings.maxPositiveSpeed, 1));*/
                     };
@@ -485,6 +530,10 @@ angular.module('artJoystick').run(['$templateCache', function($templateCache) {
     "    <div class=\"art-arrow-down art-arrow\" ng-mousedown=\"simpleDirection.up()\"></div>\n" +
     "    <div class=\"art-arrow-left art-arrow\" ng-mousedown=\"simpleDirection.up()\"></div>\n" +
     "    <div class=\"art-arrow-right art-arrow\" ng-mousedown=\"simpleDirection.up()\"></div>\n" +
+    "    <div ng-if=\"debug\" class=\"art-debug\">\n" +
+    "        <p><small>L:</small> {{actual.finalWheelSpeedLeft}}</p>\n" +
+    "        <p><small>R:</small> {{actual.finalWheelSpeedRight}}</p>\n" +
+    "    </div>\n" +
     "</div>"
   );
 

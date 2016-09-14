@@ -9,4 +9,8 @@
     <div class="art-arrow-down art-arrow" ng-mousedown="simpleDirection.up()"></div>
     <div class="art-arrow-left art-arrow" ng-mousedown="simpleDirection.up()"></div>
     <div class="art-arrow-right art-arrow" ng-mousedown="simpleDirection.up()"></div>
+    <div ng-if="debug" class="art-debug">
+        <p><small>L:</small> {{actual.finalWheelSpeedLeft}}</p>
+        <p><small>R:</small> {{actual.finalWheelSpeedRight}}</p>
+    </div>
 </div>
